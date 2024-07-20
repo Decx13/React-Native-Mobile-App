@@ -4,6 +4,7 @@ import { useTailwind} from 'nativewind';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
+import Finder from './screens/Finder';
 
 
 const Stack = createNativeStackNavigator();
@@ -14,6 +15,7 @@ export default function App() {
     <NavigationContainer>
          <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Finder" component={Finder} />
       </Stack.Navigator>
 
     </NavigationContainer>
