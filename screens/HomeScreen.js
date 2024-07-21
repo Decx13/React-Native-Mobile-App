@@ -16,7 +16,7 @@ const HomeScreen = () => {
     }, [] )
 
   return (
-   <SafeAreaView className="bg-white flex-1 top-10">
+   <SafeAreaView className="bg-white flex-1  relative">
     {/* {first Section} */}
       <View className="flex-row px-6  mt-8 items-center space-x-2  ">
         <View className=" w-16 h-16 bg-black rounded-full items-center justify-center" >
@@ -48,7 +48,7 @@ const HomeScreen = () => {
             animation="fadeIn"
             easing="ease-in-out"
             source= {startscreen}
-            className="w-full h-full object-cover mt-15"/>
+            className="w-full h-full object-cover top-6"/>
             
         <TouchableOpacity onPress={() => navigation.navigate("Finder")}>
           <Animatable.View animation={"pulse"} easing="ease-in-out" iterationCount={"infinite"}
