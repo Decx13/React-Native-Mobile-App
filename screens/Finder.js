@@ -1,13 +1,16 @@
-import { View, Text, SafeAreaView, Image, ScrollView } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import { View, Text, SafeAreaView, Image, ScrollView, TouchableOpacity } from 'react-native'
+import React, { useLayoutEffect, useState } from 'react'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { useNavigation } from '@react-navigation/native';
-import { user } from '../assets';
+import { FontAwesome } from '@expo/vector-icons';
+import { hotel, places, restaurant, user } from '../assets';
 import MenuBar from '../components/MenuBar';
 
 const Finder = () => {
 
   const navigation = useNavigation();
+  const [type, setType] = useState("restaurants");
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown : false,
@@ -32,9 +35,9 @@ const Finder = () => {
     </View>
 
     {/* api key adding */}
-    <View className="flex-row items-center bg-white mx-4 rounded-xl py-1 px-4 shadow-lg mt-4">
+    <View className="flex-row items-center bg-white mx-4 rounded-xl py-1 px-4 shadow-xl shadow-black mt-4">
 
-    <GooglePlacesAutocomplete
+    <GooglePlacesAutocomplete className="bg-slate-300"
     GooglePlacesDetailsQuery={{fields : "geometry"}}
       placeholder='Search'
       fetchDetails={true}
@@ -52,10 +55,44 @@ const Finder = () => {
     </View>
       {/* menu bar */}
       <ScrollView>
-        <View className="flex-row items-center justify-center px-8 mt-8">
-          <MenuBar>
-            
-          </MenuBar>
+        <View className="flex-row items-center justify-between px-8 mt-8  ">
+          <MenuBar
+           key={"hotel"}
+           title="Hotels"
+           imageSrc= {hotel}
+           type={type}
+           setType={setType}
+          />
+
+<MenuBar
+           key={"places"}
+           title="Places"
+           imageSrc= {places}
+           type={type}
+           setType={setType}
+          />
+
+<MenuBar
+           key={"restaurants"}
+           title="Restaurants"
+           imageSrc= {restaurant}
+           type={type}
+           setType={setType}
+          />
+           
+          
+        </View>
+
+        {/* Middle section */}
+        <View className="">
+          <View>
+            <Text>Trending</Text>
+            <TouchableOpacity>
+              <Text>Explore</Text>
+              <FontAwesome name="long-arrow-right" size={24} color="green" />
+            </TouchableOpacity>
+          </View>
+
         </View>
       </ScrollView>
    </SafeAreaView>

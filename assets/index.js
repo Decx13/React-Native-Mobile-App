@@ -1,2 +1,5 @@
 export {default as startscreen} from "./startscreen.png"
 export {default as user} from "./user.png"
+export {default as hotel} from "./hotel.png"
+export {default as places} from "./places.png"
+export {default as restaurant} from "./restaurant.png"
