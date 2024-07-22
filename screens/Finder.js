@@ -6,6 +6,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { hotel, places, restaurant, user } from '../assets';
 import MenuBar from '../components/MenuBar';
 
+
 const Finder = () => {
 
   const navigation = useNavigation();
@@ -84,13 +85,20 @@ const Finder = () => {
         </View>
 
         {/* Middle section */}
-        <View className="">
-          <View>
-            <Text>Trending</Text>
-            <TouchableOpacity>
-              <Text>Explore</Text>
+        <View>
+          <View className="flex-row items-center justify-between px-4 mt-8">
+            <Text className="text-green-400 text-[28px] font-semibold">Trending</Text>
+            <TouchableOpacity className="flex-row items-center justify-center space-x-2">
+              <Text className="text-green-400 text-[20px] font-semibold">Explore</Text>
               <FontAwesome name="long-arrow-right" size={24} color="green" />
             </TouchableOpacity>
+          </View>
+
+          {/* item area */}
+
+          <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap bg-slate-400">
+           
+          
           </View>
 
         </View>
