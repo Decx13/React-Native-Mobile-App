@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 import { hotel, places, restaurant, user } from '../assets';
 import MenuBar from '../components/MenuBar';
+import ItemCardArea from '../components/ItemCardArea';
+
 
 
 const Finder = () => {
@@ -96,7 +98,21 @@ const Finder = () => {
 
           {/* item area */}
 
-          <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap bg-slate-400">
+          <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
+           <ItemCardArea 
+           key={"101"}
+           imageSrc={"https://cdn.pixabay.com/photo/2017/08/02/18/14/architecture-2572715_960_720.jpg"}
+           title="something somewhere anywhere"
+           location="somewhere"
+           />
+
+          <ItemCardArea 
+           key={"102"}
+           imageSrc={"https://cdn.pixabay.com/photo/2017/08/02/18/14/architecture-2572715_960_720.jpg"}
+           title="some"
+           location="somewhere"
+           />
+
            
           
           </View>
