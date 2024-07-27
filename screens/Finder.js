@@ -15,9 +15,15 @@ import { getPlacesData } from '../api';
 const Finder = () => {
 
   const navigation = useNavigation();
-  const [type, setType] = useState("restaurants");
+  const [type, setType] = useState("hotels");
+  
+
   const [isLoading,setIsLoading] = useState(false);
   const [mainData,setMainData]=useState([]);
+  const [bl_lat, setBl_lat] = useState(null);
+  const [bl_lng, setBl_lng] = useState(null);
+  const [tr_lat, setTr_lat] = useState(null);
+  const [tr_lng, setTr_lng] = useState(null);
    
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -28,13 +34,13 @@ const Finder = () => {
 
   useEffect (() => {
       setIsLoading(true);
-      getPlacesData().then(data => {
+      getPlacesData(bl_lat, bl_lng, tr_lat, tr_lng, type).then(data => {
         setMainData(data);
         setInterval(() => {
           setIsLoading(false);
         }, 2000);
       })
-  },[] );
+  },[bl_lat, bl_lng, tr_lat, tr_lng, type]);
 
   return (
    <SafeAreaView className="flex-1 bg-white relative top-10">
@@ -60,9 +66,13 @@ const Finder = () => {
       placeholder='Search'
       fetchDetails={true}
       
-      onPress={(data, details = null) => {
+      onPress={(_data, details = null) => {
         // 'details' is provided when fetchDetails = true
         console.log(details?.geometry?.viewport);
+            setBl_lat(details?.geometry?.viewport?.southwest?.lat);
+            setBl_lng(details?.geometry?.viewport?.southwest?.lng);
+            setTr_lat(details?.geometry?.viewport?.northeast?.lat);
+            setTr_lng(details?.geometry?.viewport?.northeast?.lng);
       }}
       query={{
         key: 'AIzaSyCq93P5RT1VWezSjLLM-hcNkY2o4XxZ7Hc',
@@ -79,7 +89,7 @@ const Finder = () => {
       <ScrollView>
         <View className="flex-row items-center justify-between px-8 mt-8  ">
           <MenuBar
-           key={"hotel"}
+           key={"hotels"}
            title="Hotels"
            imageSrc= {hotel}
            type={type}
@@ -87,7 +97,7 @@ const Finder = () => {
           />
 
           <MenuBar
-           key={"places"}
+           key={"attractions"}
            title="Places"
            imageSrc= {places}
            type={type}
@@ -107,6 +117,7 @@ const Finder = () => {
 
         {/* Middle section */}
         <View>
+
           <View className="flex-row items-center justify-between px-4 mt-8">
             <Text className="text-green-400 text-[28px] font-semibold">Trending</Text>
             <TouchableOpacity className="flex-row items-center justify-center space-x-2">
@@ -117,40 +128,38 @@ const Finder = () => {
 
           {/* item area */}
 
-          <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
-            {mainData?.length > 0  ? (
-            <>
-            {mainData?.map((data, i) => (
-               <ItemCardArea 
-               key={i}
-               imageSrc={
-                data?.photo?.images?.medium?.url ?
-                data?.photo?.images?.medium?.url :
-                "https://cdn.pixabay.com/photo/2017/08/02/18/14/architecture-2572715_960_720.jpg"
-
-               }
-              
-               title={data?.name}
-               location={data?.location_string}
-               data={data}
-               />
-            ))}
-          
-            </> 
-            ): (
-            <>
-              <View className="w-full h-[400px] items-center justify-center">
-                <Image source={notfound} className="w-32 h-32 object-cover"/>
-                <Text className="text-xl text-black ">sorry..no data found!</Text>
-              </View>
-            </>
-            
-            ) }
-          
+           <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
+              {mainData?.length > 0 ? (
+                <>
+                  {mainData?.map((data, i) => (
+                    <ItemCardArea
+                      key={i}
+                      imageSrc={
+                        data?.photo?.images?.medium?.url
+                          ? data?.photo?.images?.medium?.url
+                          : "https://cdn.pixabay.com/photo/2015/10/30/12/22/eat-1014025_1280.jpg"
+                      }
+                      title={data?.name}
+                      location={data?.location_string}
+                      data={data}
+                    />
+                  ))}
+                </>
+            ) : (
+              <>
+                <View className="w-full h-[400px] items-center space-y-8 justify-center">
+                  <Image
+                    source={notfound}
+                    className=" w-32 h-32 object-cover"
+                  />
+                  <Text className="text-2xl text-[#428288] font-semibold">
+                    Opps...No Data Found
+                  </Text>
+                </View>
+              </>
+            )}
           </View>
-
         </View>
-
       </ScrollView>
    
    }
