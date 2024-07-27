@@ -15,9 +15,9 @@ import { getPlacesData } from '../api';
 const Finder = () => {
 
   const navigation = useNavigation();
-  const [type, setType] = useState("hotels");
-  
 
+
+  const [type, setType] = useState("restaurants");
   const [isLoading,setIsLoading] = useState(false);
   const [mainData,setMainData]=useState([]);
   const [bl_lat, setBl_lat] = useState(null);
@@ -29,8 +29,8 @@ const Finder = () => {
     navigation.setOptions({
       headerShown : false,
 
-    })
-  }, [] )
+    });
+  }, [] );
 
   useEffect (() => {
       setIsLoading(true);
@@ -39,7 +39,7 @@ const Finder = () => {
         setInterval(() => {
           setIsLoading(false);
         }, 2000);
-      })
+      });
   },[bl_lat, bl_lng, tr_lat, tr_lng, type]);
 
   return (
@@ -61,8 +61,8 @@ const Finder = () => {
     {/* api key adding */}
     <View className="flex-row items-center bg-white mx-4 rounded-xl py-1 px-4 shadow-xl shadow-black mt-4">
 
-    <GooglePlacesAutocomplete className="bg-slate-300"
-    GooglePlacesDetailsQuery={{fields : "geometry"}}
+    <GooglePlacesAutocomplete
+    GooglePlacesDetailsQuery={{ fields : "geometry" }}
       placeholder='Search'
       fetchDetails={true}
       
@@ -79,12 +79,16 @@ const Finder = () => {
         language: 'en',
       }}
     />
-
     </View>
+
+
       {/* menu bar */}
-      {isLoading ? <View className="flex-1 items-center justify-center ">
+      {isLoading ? (
+       <View className="flex-1 items-center justify-center ">
         <ActivityIndicator size="large" color="#00ff00" />
-      </View> :
+      </View>
+      
+      ):(
      
       <ScrollView>
         <View className="flex-row items-center justify-between px-8 mt-8  ">
@@ -98,7 +102,7 @@ const Finder = () => {
 
           <MenuBar
            key={"attractions"}
-           title="Places"
+           title="Attractions"
            imageSrc= {places}
            type={type}
            setType={setType}
@@ -162,9 +166,9 @@ const Finder = () => {
         </View>
       </ScrollView>
    
-   }
+    )}
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default Finder
