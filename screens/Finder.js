@@ -1,11 +1,14 @@
 import { View, Text, SafeAreaView, Image, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
-import { hotel, places, restaurant, user } from '../assets';
+import { hotel, notfound, places, restaurant, user } from '../assets';
 import MenuBar from '../components/MenuBar';
 import ItemCardArea from '../components/ItemCardArea';
+import { ActivityIndicator } from 'react-native';
+import { getPlacesData } from '../api';
+
 
 
 
@@ -13,13 +16,25 @@ const Finder = () => {
 
   const navigation = useNavigation();
   const [type, setType] = useState("restaurants");
-  
+  const [isLoading,setIsLoading] = useState(false);
+  const [mainData,setMainData]=useState([]);
+   
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown : false,
 
     })
   }, [] )
+
+  useEffect (() => {
+      setIsLoading(true);
+      getPlacesData().then(data => {
+        setMainData(data);
+        setInterval(() => {
+          setIsLoading(false);
+        }, 2000);
+      })
+  },[] );
 
   return (
    <SafeAreaView className="flex-1 bg-white relative top-10">
@@ -57,6 +72,10 @@ const Finder = () => {
 
     </View>
       {/* menu bar */}
+      {isLoading ? <View className="flex-1 items-center justify-center ">
+        <ActivityIndicator size="large" color="#00ff00" />
+      </View> :
+     
       <ScrollView>
         <View className="flex-row items-center justify-between px-8 mt-8  ">
           <MenuBar
@@ -67,7 +86,7 @@ const Finder = () => {
            setType={setType}
           />
 
-<MenuBar
+          <MenuBar
            key={"places"}
            title="Places"
            imageSrc= {places}
@@ -75,7 +94,7 @@ const Finder = () => {
            setType={setType}
           />
 
-<MenuBar
+          <MenuBar
            key={"restaurants"}
            title="Restaurants"
            imageSrc= {restaurant}
@@ -99,27 +118,43 @@ const Finder = () => {
           {/* item area */}
 
           <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
-           <ItemCardArea 
-           key={"101"}
-           imageSrc={"https://cdn.pixabay.com/photo/2017/08/02/18/14/architecture-2572715_960_720.jpg"}
-           title="something somewhere anywhere"
-           location="somewhere"
-           />
+            {mainData?.length > 0  ? (
+            <>
+            {mainData?.map((data, i) => (
+               <ItemCardArea 
+               key={i}
+               imageSrc={
+                data?.photo?.images?.medium?.url ?
+                data?.photo?.images?.medium?.url :
+                "https://cdn.pixabay.com/photo/2017/08/02/18/14/architecture-2572715_960_720.jpg"
 
-          <ItemCardArea 
-           key={"102"}
-           imageSrc={"https://cdn.pixabay.com/photo/2017/08/02/18/14/architecture-2572715_960_720.jpg"}
-           title="some"
-           location="somewhere"
-           />
-
-           
+               }
+              
+               title={data?.name}
+               location={data?.location_string}
+               data={data}
+               />
+            ))}
+          
+            </> 
+            ): (
+            <>
+              <View className="w-full h-[400px] items-center justify-center">
+                <Image source={notfound} className="w-32 h-32 object-cover"/>
+                <Text className="text-xl text-black ">sorry..no data found!</Text>
+              </View>
+            </>
+            
+            ) }
           
           </View>
 
         </View>
+
       </ScrollView>
-   </SafeAreaView>
+   
+   }
+    </SafeAreaView>
   )
 }
 
