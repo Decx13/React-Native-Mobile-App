@@ -8,14 +8,14 @@ export const getPlacesData = async (bl_lat, bl_lng, tr_lat, tr_lng, type) => {
       `https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`,
       {
         params: {
-          bl_latitude: bl_lat ? bl_lat : "25.15543993776612",
-          tr_latitude: tr_lat ? tr_lat : "25.41257834546226",
-          bl_longitude: bl_lng ? bl_lng : "51.39587210719369",
-          tr_longitude: tr_lng ? tr_lng : "51.62812119686502",
-          limit: "10",
+          bl_latitude: bl_lat ? bl_lat : "6.088133184077968",
+          tr_latitude: tr_lat ? tr_lat : "6.023649939012475",
+          bl_longitude: bl_lng ? bl_lng : " 80.25186537933452",
+          tr_longitude: tr_lng ? tr_lng : "80.17212872953226",
+          limit: "50",
           currency: "USD",
-          lunit: "km",
-          lang: "en_US",
+          subcategory: "hotel,bb,speciality"
+         
         },
         headers: {
           'x-rapidapi-key': 'ea94c50bfcmsh04ab93e961d7e3dp11e91ejsn63e2d9c5365e',

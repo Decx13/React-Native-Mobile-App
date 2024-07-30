@@ -17,7 +17,7 @@ const Finder = () => {
   const navigation = useNavigation();
 
 
-  const [type, setType] = useState("restaurants");
+  const [type, setType] = useState("attractions");
   const [isLoading,setIsLoading] = useState(false);
   const [mainData,setMainData]=useState([]);
   const [bl_lat, setBl_lat] = useState(null);
@@ -92,13 +92,6 @@ const Finder = () => {
      
       <ScrollView>
         <View className="flex-row items-center justify-between px-8 mt-8  ">
-          <MenuBar
-           key={"hotels"}
-           title="Hotels"
-           imageSrc= {hotel}
-           type={type}
-           setType={setType}
-          />
 
           <MenuBar
            key={"attractions"}
@@ -116,6 +109,14 @@ const Finder = () => {
            setType={setType}
           />
            
+          <MenuBar
+          key={"hotels"}
+          title={"Hotels"}
+          imageSrc={hotel}
+          type={type}
+          setType={setType}
+
+          /> 
           
         </View>
 
