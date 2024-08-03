@@ -20,7 +20,7 @@ const HomeScreen = () => {
     {/* {first Section} */}
       <View className="flex-row px-6  mt-8 items-center space-x-2  ">
         <View className=" w-16 h-16 bg-black rounded-full items-center justify-center" >
-            <Text className="text-green-400 text-3xl font-semibold">Go</Text>
+            <Text className="text-green-400 text-3xl font-semibold">You</Text>
         </View>
             <Text className="text-black text-3xl font-semibold">Travel</Text>
       </View> 

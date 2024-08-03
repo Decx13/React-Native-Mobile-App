@@ -14,7 +14,7 @@ export const getPlacesData = async (bl_lat, bl_lng, tr_lat, tr_lng, type) => {
           tr_longitude: tr_lng ? tr_lng : "80.17212872953226",
           limit: "50",
           currency: "USD",
-          subcategory: "hotel,bb,speciality"
+         
          
         },
         headers: {
